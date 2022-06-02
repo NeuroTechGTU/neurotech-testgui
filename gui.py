@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5 import *
 import sys
- 
+
  
 class Window(QMainWindow):
     def __init__(self):
@@ -11,7 +11,7 @@ class Window(QMainWindow):
         self.acceptDrops()
         # set the title
         self.setWindowTitle("NeuroTech Test Application")
-        self.setWindowIcon(QtGui.QIcon('imgsrc/logo.png'))
+     #   self.setWindowIcon(QtGui.QIcon('imgsrc/logo.png'))
         # setting  the geometry of window
         self.setGeometry(0, 0, 1280, 720)
         self.setFixedSize(self.size())
