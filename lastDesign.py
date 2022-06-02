@@ -20,6 +20,9 @@ from PyQt5.QtGui import*
 import sys
 import glob
 import serial
+from random import randint
+import pyqtgraph as pg
+import os
 class video:
     def __init__(self, id=None, emotion_dev=None, emotion_test=None, device_data=None):
         self.id = id 
@@ -361,6 +364,8 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
+        self.count = 0
+
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -405,6 +410,49 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         EXIT_CODE_REBOOT = -123
         super(MainWindow, self).__init__(parent)
         self.setupUi(self)
+
+        self.graphWidget = pg.PlotWidget(self)
+        self.graphWidget.showGrid(x = True, y = True)
+        self.graphWidget.move(300,100)
+        self.graphWidget.resize(600,300)
+        #self.setCentralWidget(self.graphWidget)
+
+        self.x1 = list(range(1))  # 100 time points
+        self.y1 = [randint(0,1500) for _ in range(1)]  # 100 data points
+
+        self.y2 = [randint(0,1500) for _ in range(1)]  # 100 data points
+        self.y3 = [randint(0,1500) for _ in range(1)]  # 100 data points
+        self.y4 = [randint(0,1500) for _ in range(1)]  # 100 data points
+
+        self.graphWidget.setBackground('w')
+
+        pen = pg.mkPen(color=(255, 0, 0))
+        self.x1 = self.x1[1:]  # Remove the first y1 element.
+        self.y1 = self.y1[1:]  # Remove the first
+        self.y2 = self.y2[1:]  # Remove the first
+        self.y3 = self.y3[1:]  # Remove the first
+        self.y4 = self.y4[1:]  # Remove the first
+
+        self.data_line =  self.graphWidget.plot(self.x1, self.y1, pen=pen)
+        self.data_line2 =  self.graphWidget.plot(self.x1, self.y2, pen=("g"))
+        self.data_line3 =  self.graphWidget.plot(self.x1, self.y3, pen=("b"))
+        self.data_line4 =  self.graphWidget.plot(self.x1, self.y4, pen=("y"))
+        self.sensor_val1 = 0
+        self.sensor_val2 = 0
+        self.sensor_val3 = 0
+        self.sensor_val4 = 0
+
+        self.timer = QtCore.QTimer()
+        self.timer.setInterval(500)
+        self.timer.timeout.connect(self.update_plot_data)
+        self.timer.start()
+        self.second = 0
+
+        self.timer2 = QtCore.QTimer()
+        self.timer2.setInterval(500)
+        self.timer2.timeout.connect(self.get_sensor_data)
+        self.timer2.start()
+
         timer = QtCore.QTimer(self)
         timer.timeout.connect(self.data)
         timer.start(100) #Veri akış gecikmesi.
@@ -420,6 +468,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             user_data.emotional = 'N'
    #     user_data.frequency = self.horizontalSlider_MovieFreq.value()
         if self.button_counter%2 != 0:
+            self.count+=1
+            user_data.videos.append(video(self.count))
+            user_data.videos[self.count].device_data = 'data/device_data/u_' + str(user_data.id) + '/v_' + str(self.count) + '.csv'
+            isExist = os.path.exists('data/device_data/u_' + str(user_data.id))
+            if not isExist:
+                os.makedirs('data/device_data/u_' + str(user_data.id))
+            
             self.pushButton.setText("STOP")
         else:
             self.pushButton.setText("START")
@@ -442,11 +497,67 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         user_data.height = self.spinBox_11
         user_data.weight = self.spinBox_12
 
+    def update_plot_data(self):
+        #self.x1 = self.x1[1:]  # Remove the first y element.
+        print(ser.readline())
+        print(ser.readline())
+        print(ser.readline())
+        print(ser.readline())
+        print(ser.readline())
+        print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+        if len(self.x1)>60:
+            self.x1 = self.x1[1:]  # Add a new value 1 higher than the last.
+            self.y1 = self.y1[1:]  # Remove the first
+            self.y2 = self.y2[1:]  # Remove the first
+            self.y3 = self.y3[1:]  # Remove the first
+            self.y4 = self.y4[1:]  # Remove the first
+        self.x1.append(self.second)
+        self.second = self.second + 1
+        self.y1.append(self.sensor_val1)  # Add a new random value.
+        self.y2.append(self.sensor_val2)  # Add a new random value.
+        self.y3.append(self.sensor_val3)  # Add a new random value.
+        self.y4.append(self.sensor_val4)  # Add a new random value.
+
+        self.data_line.setData(self.x1, self.y1)  # Update the data.
+        self.data_line2.setData(self.x1, self.y2)  # Update the data
+        self.data_line3.setData(self.x1, self.y3)  # Update the data
+        self.data_line4.setData(self.x1, self.y4)  # Update the data
+
+    def get_sensor_data(self):
+        data_str = str(ser.readline())
+        data_str = data_str.replace("b'", '')
+        data_str = data_str.replace("\\r\\n'", '')
+        data_str = data_str.split('\\')[0]
+        data_list = data_str.split(' ')
+        self.sensor_val1 = float(data_list[0])
+
+        data_str = str(ser.readline())
+        data_str = data_str.replace("b'", '')
+        data_str = data_str.replace("\\r\\n'", '')
+        data_str = data_str.split('\\')[0]
+        data_list = data_str.split(' ')
+        self.sensor_val2 = float(data_list[0])
+
+        data_str = str(ser.readline())
+        data_str = data_str.replace("b'", '')
+        data_str = data_str.replace("\\r\\n'", '')
+        data_str = data_str.split('\\')[0]
+        data_list = data_str.split(' ')
+        self.sensor_val3 = float(data_list[0])
+
+        data_str = str(ser.readline())
+        data_str = data_str.replace("b'", '')
+        data_str = data_str.replace("\\r\\n'", '')
+        data_str = data_str.split('\\')[0]
+        data_list = data_str.split(' ')
+        self.sensor_val4 = float(data_list[0])
+
 
 if __name__ == "__main__":
     #fd = open('data/user_count', 'r')
     #id = int(fd.readline())
     #fd.close()
+    ser = serial.Serial('COM4',115200)
     user_data = user(id)
 
     print("Baslatiliyor...")
