@@ -424,7 +424,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.y3 = [randint(0,1500) for _ in range(1)]  # 100 data points
         self.y4 = [randint(0,1500) for _ in range(1)]  # 100 data points
 
-        self.graphWidget.setBackground('w')
+        self.graphWidget.setBackground(background=None)
 
         pen = pg.mkPen(color=(255, 0, 0))
         self.x1 = self.x1[1:]  # Remove the first y1 element.
@@ -469,16 +469,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
    #     user_data.frequency = self.horizontalSlider_MovieFreq.value()
         if self.button_counter%2 != 0:
             self.count+=1
-            user_data.videos.append(video(self.count))
-            user_data.videos[self.count].device_data = 'data/device_data/u_' + str(user_data.id) + '/v_' + str(self.count) + '.csv'
-            isExist = os.path.exists('data/device_data/u_' + str(user_data.id))
-            if not isExist:
-                os.makedirs('data/device_data/u_' + str(user_data.id))
-            
             self.pushButton.setText("STOP")
         else:
             self.pushButton.setText("START")
-
         if self.freq0.isChecked():
             user_data.frequency = 0
         elif self.freq1.isChecked():
