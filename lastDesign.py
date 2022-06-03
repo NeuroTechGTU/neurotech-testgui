@@ -60,7 +60,6 @@ class Ui_MainWindow(object):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(945, 629)
         MainWindow.setStyleSheet("background-color: rgb(12, 45, 72);")
-        self.showMaximized()
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(self.centralwidget)
@@ -411,6 +410,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         EXIT_CODE_REBOOT = -123
         super(MainWindow, self).__init__(parent)
         self.setupUi(self)
+
         self.graphWidget = pg.PlotWidget(self)
         self.graphWidget.showGrid(x = True, y = True)
         self.graphWidget.move(300,100)
@@ -434,7 +434,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.y4 = self.y4[1:]  # Remove the first
 
         self.data_line =  self.graphWidget.plot(self.x1, self.y1, pen=pen)
-        self.data_line2 =  self.graphWidget.plot(self.x1, self.y2, pen=("g"))
+        #self.data_line2 =  self.graphWidget.plot(self.x1, self.y2, pen=("g"))
+        self.data_line2 =   self.graphWidget.plot(self.x1, self.y2, pen ='g', symbol ='x', symbolPen ='g',symbolBrush = 0.2, name ='green')
         self.data_line3 =  self.graphWidget.plot(self.x1, self.y3, pen=("b"))
         self.data_line4 =  self.graphWidget.plot(self.x1, self.y4, pen=("y"))
         self.sensor_val1 = 0
@@ -469,9 +470,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
    #     user_data.frequency = self.horizontalSlider_MovieFreq.value()
         if self.button_counter%2 != 0:
             self.count+=1
+
+            
             self.pushButton.setText("STOP")
         else:
             self.pushButton.setText("START")
+
         if self.freq0.isChecked():
             user_data.frequency = 0
         elif self.freq1.isChecked():

@@ -58,9 +58,8 @@ class user:
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1846, 970)
+        MainWindow.setFixedSize(1900, 970)
         MainWindow.setStyleSheet("background-color: rgb(12, 45, 72);")
-        self.showMaximized()
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(self.centralwidget)
@@ -462,8 +461,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.graphWidget = pg.PlotWidget(self)
         self.graphWidget.showGrid(x = True, y = True)
-        self.graphWidget.move(300,100)
-        self.graphWidget.resize(600,300)
+        self.graphWidget.move(450,130)
+        self.graphWidget.resize(1300,600)
         #self.setCentralWidget(self.graphWidget)
 
         self.x1 = list(range(1))  # 100 time points
@@ -482,10 +481,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.y3 = self.y3[1:]  # Remove the first
         self.y4 = self.y4[1:]  # Remove the first
 
-        self.data_line =  self.graphWidget.plot(self.x1, self.y1, pen=pen)
-        self.data_line2 =  self.graphWidget.plot(self.x1, self.y2, pen=("g"))
-        self.data_line3 =  self.graphWidget.plot(self.x1, self.y3, pen=("b"))
-        self.data_line4 =  self.graphWidget.plot(self.x1, self.y4, pen=("y"))
+        self.graphWidget.addLegend()
+        self.data_line =  self.graphWidget.plot(self.x1, self.y1, pen=pen,name ='Sensor 1: 28mm')
+        self.data_line2 =  self.graphWidget.plot(self.x1, self.y2, pen=("g"),name = 'Sensor 2: 24mm')
+        self.data_line3 =  self.graphWidget.plot(self.x1, self.y3, pen=("m"),name = 'Sensor 3: 10mm')
+        self.data_line4 =  self.graphWidget.plot(self.x1, self.y4, pen=("y"), name = 'Sensor 4: 5mm')
         self.sensor_val1 = 0
         self.sensor_val2 = 0
         self.sensor_val3 = 0
@@ -517,10 +517,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             user_data.emotional = 'N'
    #     user_data.frequency = self.horizontalSlider_MovieFreq.value()
         if self.button_counter%2 != 0:
-            self.count+=1
             self.pushButton.setText("STOP")
+            self.label_15.setText("Recording")
         else:
             self.pushButton.setText("START")
+            self.label_15.setText("Not Recording")
         if self.freq0.isChecked():
             user_data.frequency = 0
         elif self.freq1.isChecked():
@@ -541,12 +542,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def update_plot_data(self):
         #self.x1 = self.x1[1:]  # Remove the first y element.
-        print(ser.readline())
-        print(ser.readline())
-        print(ser.readline())
-        print(ser.readline())
-        print(ser.readline())
-        print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
         if len(self.x1)>60:
             self.x1 = self.x1[1:]  # Add a new value 1 higher than the last.
             self.y1 = self.y1[1:]  # Remove the first
@@ -599,7 +594,7 @@ if __name__ == "__main__":
     #fd = open('data/user_count', 'r')
     #id = int(fd.readline())
     #fd.close()
-    ser = serial.Serial('COM4',115200)
+    ser = serial.Serial('COM3',115200)
     user_data = user(id)
 
     print("Baslatiliyor...")
