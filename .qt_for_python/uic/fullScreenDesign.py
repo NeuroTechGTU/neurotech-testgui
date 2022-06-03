@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'c:\Users\Sevra\gui\lastDesign.ui'
+# Form implementation generated from reading ui file 'c:\Users\Sevra\gui\fullScreenDesign.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1839, 865)
+        MainWindow.resize(1846, 970)
         MainWindow.setStyleSheet("background-color: rgb(12, 45, 72);")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -30,7 +30,7 @@ class Ui_MainWindow(object):
         self.label_2.setAlignment(QtCore.Qt.AlignCenter)
         self.label_2.setObjectName("label_2")
         self.label_3 = QtWidgets.QLabel(self.centralwidget)
-        self.label_3.setGeometry(QtCore.QRect(30, 50, 331, 71))
+        self.label_3.setGeometry(QtCore.QRect(70, 120, 331, 71))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei Light")
         font.setPointSize(14)
@@ -46,7 +46,7 @@ class Ui_MainWindow(object):
         self.label_3.setAlignment(QtCore.Qt.AlignCenter)
         self.label_3.setObjectName("label_3")
         self.groupBox = QtWidgets.QGroupBox(self.centralwidget)
-        self.groupBox.setGeometry(QtCore.QRect(30, 140, 331, 61))
+        self.groupBox.setGeometry(QtCore.QRect(70, 210, 331, 61))
         self.groupBox.setMaximumSize(QtCore.QSize(16700000, 16700000))
         self.groupBox.setStyleSheet("border: 0px;\n"
 "background-color: rgb(65, 114, 159);\n"
@@ -56,14 +56,14 @@ class Ui_MainWindow(object):
         self.radioButton_4 = QtWidgets.QRadioButton(self.groupBox)
         self.radioButton_4.setGeometry(QtCore.QRect(100, 10, 81, 41))
         font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
+        font.setFamily("Microsoft YaHei UI Light")
         font.setPointSize(11)
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(50)
         self.radioButton_4.setFont(font)
         self.radioButton_4.setStyleSheet("color: rgb(255, 255, 255);\n"
-"font: 11pt \"Microsoft YaHei UI\";")
+"font: 11pt \"Microsoft YaHei UI Light\";")
         self.radioButton_4.setObjectName("radioButton_4")
         self.label_4 = QtWidgets.QLabel(self.groupBox)
         self.label_4.setGeometry(QtCore.QRect(10, 10, 81, 41))
@@ -78,10 +78,10 @@ class Ui_MainWindow(object):
         self.radioButton_3 = QtWidgets.QRadioButton(self.groupBox)
         self.radioButton_3.setGeometry(QtCore.QRect(190, 10, 111, 41))
         self.radioButton_3.setStyleSheet("color: rgb(255, 255, 255);\n"
-"font: 11pt \"Microsoft YaHei UI\";")
+"font: 11pt \"Microsoft YaHei UI Light\";")
         self.radioButton_3.setObjectName("radioButton_3")
         self.groupBox_2 = QtWidgets.QGroupBox(self.centralwidget)
-        self.groupBox_2.setGeometry(QtCore.QRect(30, 210, 331, 61))
+        self.groupBox_2.setGeometry(QtCore.QRect(70, 280, 331, 61))
         self.groupBox_2.setStyleSheet("border: 0px;\n"
 "background-color: rgb(65, 114, 159);\n"
 "border-radius:10px;")
@@ -107,7 +107,7 @@ class Ui_MainWindow(object):
         self.label_5.setFont(font)
         self.label_5.setObjectName("label_5")
         self.groupBox_3 = QtWidgets.QGroupBox(self.centralwidget)
-        self.groupBox_3.setGeometry(QtCore.QRect(30, 420, 331, 61))
+        self.groupBox_3.setGeometry(QtCore.QRect(70, 490, 331, 61))
         self.groupBox_3.setStyleSheet("border: 0px;\n"
 "background-color: rgb(65, 114, 159);\n"
 "border-radius:10px;")
@@ -126,8 +126,28 @@ class Ui_MainWindow(object):
         self.checkBox.setGeometry(QtCore.QRect(210, 10, 41, 31))
         self.checkBox.setText("")
         self.checkBox.setObjectName("checkBox")
+        self.groupBox_4 = QtWidgets.QGroupBox(self.groupBox_3)
+        self.groupBox_4.setGeometry(QtCore.QRect(0, 0, 331, 61))
+        self.groupBox_4.setStyleSheet("border: 0px;\n"
+"background-color: rgb(65, 114, 159);\n"
+"border-radius:10px;")
+        self.groupBox_4.setTitle("")
+        self.groupBox_4.setObjectName("groupBox_4")
+        self.label_11 = QtWidgets.QLabel(self.groupBox_4)
+        self.label_11.setGeometry(QtCore.QRect(10, 10, 191, 31))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft YaHei Light")
+        font.setPointSize(12)
+        font.setBold(False)
+        font.setWeight(50)
+        self.label_11.setFont(font)
+        self.label_11.setObjectName("label_11")
+        self.checkBox_4 = QtWidgets.QCheckBox(self.groupBox_4)
+        self.checkBox_4.setGeometry(QtCore.QRect(210, 10, 41, 31))
+        self.checkBox_4.setText("")
+        self.checkBox_4.setObjectName("checkBox_4")
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton.setGeometry(QtCore.QRect(400, 700, 191, 91))
+        self.pushButton.setGeometry(QtCore.QRect(450, 780, 191, 91))
         self.pushButton.setStyleSheet("color: rgb(255, 255, 255);\n"
 "font: 75 18pt \"Poppins\";\n"
 "border-radius: 30px;\n"
@@ -135,7 +155,7 @@ class Ui_MainWindow(object):
 "border-style: outset;")
         self.pushButton.setObjectName("pushButton")
         self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_2.setGeometry(QtCore.QRect(640, 700, 191, 91))
+        self.pushButton_2.setGeometry(QtCore.QRect(680, 780, 191, 91))
         font = QtGui.QFont()
         font.setFamily("Poppins")
         font.setPointSize(18)
@@ -156,7 +176,7 @@ class Ui_MainWindow(object):
         self.label_8.setAlignment(QtCore.Qt.AlignCenter)
         self.label_8.setObjectName("label_8")
         self.groupBox_6 = QtWidgets.QGroupBox(self.centralwidget)
-        self.groupBox_6.setGeometry(QtCore.QRect(30, 490, 331, 311))
+        self.groupBox_6.setGeometry(QtCore.QRect(70, 560, 331, 311))
         self.groupBox_6.setMaximumSize(QtCore.QSize(16700000, 16700000))
         self.groupBox_6.setStyleSheet("border: 0px;\n"
 "background-color: rgb(65, 114, 159);\n"
@@ -166,14 +186,14 @@ class Ui_MainWindow(object):
         self.freq0 = QtWidgets.QRadioButton(self.groupBox_6)
         self.freq0.setGeometry(QtCore.QRect(10, 80, 101, 21))
         font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
+        font.setFamily("Microsoft JhengHei UI Light")
         font.setPointSize(11)
         font.setBold(False)
         font.setItalic(False)
-        font.setWeight(50)
+        font.setWeight(3)
         self.freq0.setFont(font)
         self.freq0.setStyleSheet("color: rgb(255, 255, 255);\n"
-"font: 11pt \"Microsoft YaHei UI\";")
+"font: 25 11pt \"Microsoft JhengHei UI Light\";")
         self.freq0.setObjectName("freq0")
         self.label_13 = QtWidgets.QLabel(self.groupBox_6)
         self.label_13.setGeometry(QtCore.QRect(10, 20, 311, 51))
@@ -188,58 +208,62 @@ class Ui_MainWindow(object):
         self.freq1 = QtWidgets.QRadioButton(self.groupBox_6)
         self.freq1.setGeometry(QtCore.QRect(10, 110, 131, 31))
         self.freq1.setStyleSheet("color: rgb(255, 255, 255);\n"
-"font: 11pt \"Microsoft YaHei UI\";")
+"font: 25 11pt \"Microsoft YaHei UI Light\";\n"
+"")
         self.freq1.setObjectName("freq1")
         self.freq2 = QtWidgets.QRadioButton(self.groupBox_6)
         self.freq2.setGeometry(QtCore.QRect(10, 150, 161, 17))
         font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
+        font.setFamily("Microsoft JhengHei UI Light")
         font.setPointSize(11)
         font.setBold(False)
         font.setItalic(False)
-        font.setWeight(50)
+        font.setWeight(3)
         self.freq2.setFont(font)
         self.freq2.setStyleSheet("color: rgb(255, 255, 255);\n"
-"font: 11pt \"Microsoft YaHei UI\";")
+"font: 25 11pt \"Microsoft JhengHei UI Light\";\n"
+"")
         self.freq2.setObjectName("freq2")
         self.freq3 = QtWidgets.QRadioButton(self.groupBox_6)
         self.freq3.setGeometry(QtCore.QRect(10, 180, 141, 21))
         font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
+        font.setFamily("Microsoft JhengHei UI Light")
         font.setPointSize(11)
         font.setBold(False)
         font.setItalic(False)
-        font.setWeight(50)
+        font.setWeight(3)
         self.freq3.setFont(font)
         self.freq3.setStyleSheet("color: rgb(255, 255, 255);\n"
-"font: 11pt \"Microsoft YaHei UI\";")
+"font: 25 11pt \"Microsoft JhengHei UI Light\";\n"
+"")
         self.freq3.setObjectName("freq3")
         self.freq4 = QtWidgets.QRadioButton(self.groupBox_6)
         self.freq4.setGeometry(QtCore.QRect(10, 220, 141, 17))
         font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
+        font.setFamily("Microsoft JhengHei UI Light")
         font.setPointSize(11)
         font.setBold(False)
         font.setItalic(False)
-        font.setWeight(50)
+        font.setWeight(3)
         self.freq4.setFont(font)
         self.freq4.setStyleSheet("color: rgb(255, 255, 255);\n"
-"font: 11pt \"Microsoft YaHei UI\";")
+"font: 25 11pt \"Microsoft JhengHei UI Light\";\n"
+"")
         self.freq4.setObjectName("freq4")
         self.freq5 = QtWidgets.QRadioButton(self.groupBox_6)
         self.freq5.setGeometry(QtCore.QRect(10, 250, 171, 31))
         font = QtGui.QFont()
-        font.setFamily("Microsoft YaHei UI")
+        font.setFamily("Microsoft JhengHei UI Light")
         font.setPointSize(11)
         font.setBold(False)
         font.setItalic(False)
-        font.setWeight(50)
+        font.setWeight(3)
         self.freq5.setFont(font)
         self.freq5.setStyleSheet("color: rgb(255, 255, 255);\n"
-"font: 11pt \"Microsoft YaHei UI\";")
+"font: 25 11pt \"Microsoft JhengHei UI Light\";")
         self.freq5.setObjectName("freq5")
         self.groupBox_7 = QtWidgets.QGroupBox(self.centralwidget)
-        self.groupBox_7.setGeometry(QtCore.QRect(30, 280, 331, 61))
+        self.groupBox_7.setGeometry(QtCore.QRect(70, 350, 331, 61))
         self.groupBox_7.setStyleSheet("border: 0px;\n"
 "background-color: rgb(65, 114, 159);\n"
 "border-radius:10px;")
@@ -284,7 +308,7 @@ class Ui_MainWindow(object):
         self.spinBox_12.setMinimum(6)
         self.spinBox_12.setObjectName("spinBox_12")
         self.groupBox_5 = QtWidgets.QGroupBox(self.centralwidget)
-        self.groupBox_5.setGeometry(QtCore.QRect(30, 350, 331, 61))
+        self.groupBox_5.setGeometry(QtCore.QRect(70, 420, 331, 61))
         self.groupBox_5.setStyleSheet("border: 0px;\n"
 "background-color: rgb(65, 114, 159);\n"
 "border-radius:10px;")
@@ -306,13 +330,31 @@ class Ui_MainWindow(object):
         self.textEdit.setUndoRedoEnabled(True)
         self.textEdit.setObjectName("textEdit")
         self.label_7 = QtWidgets.QLabel(self.centralwidget)
-        self.label_7.setGeometry(QtCore.QRect(590, 0, 641, 141))
+        self.label_7.setGeometry(QtCore.QRect(500, -80, 791, 271))
         self.label_7.setStyleSheet("image: url(:/logo/imgsrc/Moodie.png);")
         self.label_7.setText("")
         self.label_7.setObjectName("label_7")
+        self.label_15 = QtWidgets.QLabel(self.centralwidget)
+        self.label_15.setGeometry(QtCore.QRect(920, 760, 321, 101))
+        font = QtGui.QFont()
+        font.setFamily("Microsoft JhengHei UI")
+        font.setPointSize(12)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(9)
+        self.label_15.setFont(font)
+        self.label_15.setStyleSheet("    border: 3px solid ;\n"
+"    border-color: rgb(255, 255, 255);\n"
+"    font: 75 12pt \"Microsoft JhengHei UI\";\n"
+"    border-radius: 20px;\n"
+"    margin-top: 0.5em;\n"
+"    color: rgb(255, 255, 255);")
+        self.label_15.setTextFormat(QtCore.Qt.RichText)
+        self.label_15.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_15.setObjectName("label_15")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1839, 26))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1846, 26))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -332,6 +374,7 @@ class Ui_MainWindow(object):
         self.radioButton_3.setText(_translate("MainWindow", "Female"))
         self.label_5.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; color:#ffffff;\">Age :</span></p></body></html>"))
         self.label_6.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" color:#ffffff;\">Are you emotional ?</span></p></body></html>"))
+        self.label_11.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" color:#ffffff;\">Are you emotional ?</span></p></body></html>"))
         self.pushButton.setText(_translate("MainWindow", "START"))
         self.pushButton_2.setText(_translate("MainWindow", "RESET"))
         self.label_8.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600; color:#e5e5e5;\">TECH</span></p></body></html>"))
@@ -350,4 +393,5 @@ class Ui_MainWindow(object):
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+        self.label_15.setText(_translate("MainWindow", "<html><head/><body><p>Not recording</p></body></html>"))
 import imsrc_rc

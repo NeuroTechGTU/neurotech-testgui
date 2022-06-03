@@ -17,7 +17,7 @@ class Window(QMainWindow):
         self.setFixedSize(self.size())
         # creating label
         self.logo = QLabel(self)
-         
+        self.showMaximized()
         # loading image
         self.logo_pixmap = QPixmap('imgsrc/logo.png')
         self.logo_pixmap.scaled(50,50)

@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="logo">
+    <file>imgsrc/Moodie.png</file>
     <file>imgsrc/logo.png</file>
   </qresource>
 </RCC>
