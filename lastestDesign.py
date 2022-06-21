@@ -462,7 +462,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.graphWidget = pg.PlotWidget(self)
         self.graphWidget.showGrid(x = True, y = True)
         self.graphWidget.move(450,130)
-        self.graphWidget.resize(1300,600)
+        #self.graphWidget.resize(1300,600)
+        self.graphWidget.resize(650,300)
         #self.setCentralWidget(self.graphWidget)
 
         self.x1 = list(range(1))  # 100 time points
@@ -490,6 +491,26 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.sensor_val2 = 0
         self.sensor_val3 = 0
         self.sensor_val4 = 0
+
+
+        self.y_axis = [1,2,3,4,5,6]
+        xlab = ['SAD', 'HAPPINESS', 'FEAR', 'ANGRY', 'TRUST', 'FUN']
+        self.xval = list(range(1,len(xlab)+1))
+
+        ticks=[]
+        for i, item in enumerate(xlab):
+            ticks.append( (self.xval[i], item) )
+        ticks = [ticks]
+        
+        self.barGraphWidget = pg.PlotWidget(self)
+        self.barGraphWidget.resize(650,300)
+        self.barGraphWidget.move(450,450)
+        self.barGraph = pg.BarGraphItem(x=self.xval, height=self.y_axis, width=0.5)
+        self.barGraphWidget.addItem(self.barGraph)
+        #self.data_line5 = self.barGraphWidget.plot(self.xval,self.y_axis)
+
+        ax = self.barGraphWidget.getAxis('bottom')
+        ax.setTicks(ticks)
 
         self.timer = QtCore.QTimer()
         self.timer.setInterval(500)
@@ -560,41 +581,53 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.data_line3.setData(self.x1, self.y3)  # Update the data
         self.data_line4.setData(self.x1, self.y4)  # Update the data
 
+        self.y_axis = [randint(1,10), randint(1,10), randint(1,10), randint(1,10), randint(1,10), randint(1,10)]
+        self.barGraphWidget.plotItem.clear()
+        self.barGraph = pg.BarGraphItem(x=self.xval, height=self.y_axis, width=0.5)
+        self.barGraphWidget.addItem(self.barGraph)
+        
+        #self.data_line5.setData(self.xval,self.y_axis)
+
+
     def get_sensor_data(self):
-        data_str = str(ser.readline())
+        """data_str = str(ser.readline())
         data_str = data_str.replace("b'", '')
         data_str = data_str.replace("\\r\\n'", '')
         data_str = data_str.split('\\')[0]
         data_list = data_str.split(' ')
-        self.sensor_val1 = float(data_list[0])
+        self.sensor_val1 = float(data_list[0])"""
+        self.sensor_val1 = randint(100,1000)
 
-        data_str = str(ser.readline())
+        """data_str = str(ser.readline())
         data_str = data_str.replace("b'", '')
         data_str = data_str.replace("\\r\\n'", '')
         data_str = data_str.split('\\')[0]
         data_list = data_str.split(' ')
-        self.sensor_val2 = float(data_list[0])
+        self.sensor_val2 = float(data_list[0])"""
+        self.sensor_val2 = randint(100,1000)
 
-        data_str = str(ser.readline())
+        """data_str = str(ser.readline())
         data_str = data_str.replace("b'", '')
         data_str = data_str.replace("\\r\\n'", '')
         data_str = data_str.split('\\')[0]
         data_list = data_str.split(' ')
-        self.sensor_val3 = float(data_list[0])
+        self.sensor_val3 = float(data_list[0])"""
+        self.sensor_val3 = randint(100,1000)
 
-        data_str = str(ser.readline())
+        """data_str = str(ser.readline())
         data_str = data_str.replace("b'", '')
         data_str = data_str.replace("\\r\\n'", '')
         data_str = data_str.split('\\')[0]
         data_list = data_str.split(' ')
-        self.sensor_val4 = float(data_list[0])
+        self.sensor_val4 = float(data_list[0])"""
+        self.sensor_val4 = randint(100,1000)
 
 
 if __name__ == "__main__":
     #fd = open('data/user_count', 'r')
     #id = int(fd.readline())
     #fd.close()
-    ser = serial.Serial('COM4',115200)
+    #ser = serial.Serial('COM4',115200)
     user_data = user(id)
 
     print("Baslatiliyor...")
