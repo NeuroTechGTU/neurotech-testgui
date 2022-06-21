@@ -594,7 +594,7 @@ if __name__ == "__main__":
     #fd = open('data/user_count', 'r')
     #id = int(fd.readline())
     #fd.close()
-    ser = serial.Serial('COM3',115200)
+    ser = serial.Serial('COM4',115200)
     user_data = user(id)
 
     print("Baslatiliyor...")
