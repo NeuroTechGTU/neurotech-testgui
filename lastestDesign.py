@@ -9,8 +9,11 @@
 
 
 
+import json
+from statistics import mean
 import sys
 from turtle import color
+from unittest import result
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -18,10 +21,12 @@ from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.QtChart import QChart, QChartView, QPieSeries, QPieSlice
 from PyQt5.QtGui import QPainter, QPen
 from PyQt5.QtCore import Qt
+import requests
  
 
 
 import imsrc
+import numpy as np
 from PyQt5 import*
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import*
@@ -503,8 +508,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.sensor_val4 = 0
 
 
-        self.y_axis = [1,2,3,4,5,6,7,8]
-        xlab = ['ANGER', 'ANTIPATHY', 'DISGUST', 'FEAR', 'JOY', 'SAD', 'SURPRISE', 'TRUST']
+        self.y_axis = [1,2,3,4,5,6]
+        xlab = ['ANGER', 'ANTIPATHY', 'DISGUST', 'FEAR', 'JOY', 'SAD']
         self.xval = list(range(1,len(xlab)+1))
 
         ticks=[]
@@ -596,7 +601,24 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.data_line3.setData(self.x1, self.y3)  # Update the data
         self.data_line4.setData(self.x1, self.y4)  # Update the data
 
-        self.y_axis = [randint(1,10), randint(1,10), randint(1,10), randint(1,10), randint(1,10), randint(1,10), randint(1,10), randint(1,10)]
+        
+        results = self.model_com()
+        if results != None:
+        #arr = json.loads(results)
+
+            my_json = results.content.decode('utf8').replace("'", '"')
+            print(my_json)
+            print('- ' * 20)
+
+            my_json = " ".join(my_json.split())
+            str = my_json[2:len(my_json)-2]
+            a = list()
+            a = str.split(" ")
+
+            self.y_axis = [float(a[0])*100, float(a[1])*100, float(a[2])*100, float(a[3])*100, float(a[4])*100, float(a[5])*100]
+        else :
+            self.y_axis = [0,0,0,0,0,0]
+            
         self.barGraphWidget.plotItem.clear()
         self.barGraph = pg.BarGraphItem(x=self.xval, height=self.y_axis, width=0.5,  brush=(255,31,72))
 
@@ -606,39 +628,46 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
 
     def get_sensor_data(self):
-        """data_str = str(ser.readline())
+        data_str = str(ser.readline())
         data_str = data_str.replace("b'", '')
         data_str = data_str.replace("\\r\\n'", '')
         data_str = data_str.split('\\')[0]
         data_list = data_str.split(' ')
-        self.sensor_val1 = float(data_list[0])"""
-        self.sensor_val1 = randint(100,1000)
+        F1 = np.fft.fft(data_list)
+        print("F1: "+str(F1))
+        self.sensor_val1 = float(data_list[0])
+        #self.sensor_val1 = randint(100,1000)
 
-        """data_str = str(ser.readline())
+        data_str = str(ser.readline())
         data_str = data_str.replace("b'", '')
         data_str = data_str.replace("\\r\\n'", '')
         data_str = data_str.split('\\')[0]
         data_list = data_str.split(' ')
-        self.sensor_val2 = float(data_list[0])"""
-        self.sensor_val2 = randint(100,1000)
+        F2 = np.fft.fft(data_list)
+        print("F2 "+str(F2))
+        self.sensor_val2 = float(data_list[0])
+        #self.sensor_val2 = randint(100,1000)
 
-        """data_str = str(ser.readline())
+        data_str = str(ser.readline())
         data_str = data_str.replace("b'", '')
         data_str = data_str.replace("\\r\\n'", '')
         data_str = data_str.split('\\')[0]
         data_list = data_str.split(' ')
-        self.sensor_val3 = float(data_list[0])"""
-        self.sensor_val3 = randint(100,1000)
+        F3 = np.fft.fft(data_list)
+        print("F3 "+str(F3))
+        self.sensor_val3 = float(data_list[0])
+        #self.sensor_val3 = randint(100,1000)
 
-        """data_str = str(ser.readline())
+        data_str = str(ser.readline())
         data_str = data_str.replace("b'", '')
         data_str = data_str.replace("\\r\\n'", '')
         data_str = data_str.split('\\')[0]
         data_list = data_str.split(' ')
-        self.sensor_val4 = float(data_list[0])"""
-        self.sensor_val4 = randint(100,1000)
+        F4 = np.fft.fft(data_list)
+        print("F4 "+str(F4))
+        self.sensor_val4 = float(data_list[0])
+        #self.sensor_val4 = randint(100,1000)
 
-        
 
     def reset(self):
        # self.radioButton_3.setChecked(False)
@@ -649,7 +678,38 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.show()
         self.create_piechart()
 
+    def model_com(self):
+        req = []
+        req.append(0)
+        req.append(21)
+        req.append(1)
 
+        if self.sensor_val1 == 0 and self.sensor_val2 == 0 and self.sensor_val3 == 0 and self.sensor_val4 == 0:
+            return None
+        req.append(self.sensor_val1)
+        req.append(self.sensor_val1)
+        req.append(self.sensor_val1)
+
+        req.append(self.sensor_val2)
+        req.append(self.sensor_val2)
+        req.append(self.sensor_val2)
+
+        req.append(self.sensor_val3)
+        req.append(self.sensor_val3)
+        req.append(self.sensor_val3)
+
+        req.append(self.sensor_val4)
+        req.append(self.sensor_val4)
+        req.append(self.sensor_val4)
+
+        URL = 'https://neurotech-model.azurewebsites.net/api/HttpTrigger1?code=H_b77QaGW6eeF8UvewZONUSBFuBUfZ1R9yGftNQKHKXEAzFuGLjiqQ=='
+
+        body = {'data':req, 'model_num': 0}
+
+        res = requests.post(URL,json=body)
+
+        print(res.status_code)
+        return res
 
     def create_piechart(self):
     
@@ -698,7 +758,7 @@ if __name__ == "__main__":
     #fd = open('data/user_count', 'r')
     #id = int(fd.readline())
     #fd.close()
-    #ser = serial.Serial('COM4',115200)
+    ser = serial.Serial('COM4',115200)
     user_data = user(id)
 
     print("Baslatiliyor...")
