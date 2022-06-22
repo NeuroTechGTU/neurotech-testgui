@@ -10,8 +10,16 @@
 
 
 import sys
+from turtle import color
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+
+from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtChart import QChart, QChartView, QPieSeries, QPieSlice
+from PyQt5.QtGui import QPainter, QPen
+from PyQt5.QtCore import Qt
+ 
+
 
 import imsrc
 from PyQt5 import*
@@ -202,7 +210,6 @@ class Ui_MainWindow(object):
         self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_2.setGeometry(QtCore.QRect(680, 780, 191, 91))
         self.pushButton.clicked.connect(self.clickme)
-        self.pushButton_2.clicked.connect(self.reset) 
         font = QtGui.QFont()
         font.setFamily("Poppins")
         font.setPointSize(18)
@@ -423,7 +430,7 @@ class Ui_MainWindow(object):
         self.label_6.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" color:#ffffff;\">Are you emotional ?</span></p></body></html>"))
         self.label_11.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" color:#ffffff;\">Are you emotional ?</span></p></body></html>"))
         self.pushButton.setText(_translate("MainWindow", "START"))
-        self.pushButton_2.setText(_translate("MainWindow", "RESET"))
+        self.pushButton_2.setText(_translate("MainWindow", "STOP"))
         self.label_8.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600; color:#e5e5e5;\">TECH</span></p></body></html>"))
         self.freq0.setText(_translate("MainWindow", "Never"))
         self.label_13.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" color:#ffffff;\">How often do you watch movies?</span></p></body></html>"))
@@ -444,10 +451,7 @@ class Ui_MainWindow(object):
 
     def clickme(self):
         self.button_counter = self.button_counter + 1
-    def reset(self):
-        self.radioButton_3.setChecked(False)
-        self.radioButton_4.setChecked(False)
-        self.checkBox.setChecked(False)
+
     #    self.horizontalSlider_MovieFreq.setValue(0)
         self.spinBox_11.setValue(6)
 #import imsrc_rc
@@ -456,14 +460,20 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
         print("-------------------")
         EXIT_CODE_REBOOT = -123
-        super(MainWindow, self).__init__(parent)
+        super(MainWindow, self).__init__(parent)        
         self.setupUi(self)
+
+        self.pushButton_2.clicked.connect(self.reset) 
+
+
+     
+
 
         self.graphWidget = pg.PlotWidget(self)
         self.graphWidget.showGrid(x = True, y = True)
         self.graphWidget.move(450,130)
         #self.graphWidget.resize(1300,600)
-        self.graphWidget.resize(650,300)
+        self.graphWidget.resize(1200,300)
         #self.setCentralWidget(self.graphWidget)
 
         self.x1 = list(range(1))  # 100 time points
@@ -493,8 +503,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.sensor_val4 = 0
 
 
-        self.y_axis = [1,2,3,4,5,6]
-        xlab = ['SAD', 'HAPPINESS', 'FEAR', 'ANGRY', 'TRUST', 'FUN']
+        self.y_axis = [1,2,3,4,5,6,7,8]
+        xlab = ['ANGER', 'ANTIPATHY', 'DISGUST', 'FEAR', 'JOY', 'SAD', 'SURPRISE', 'TRUST']
         self.xval = list(range(1,len(xlab)+1))
 
         ticks=[]
@@ -503,11 +513,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         ticks = [ticks]
         
         self.barGraphWidget = pg.PlotWidget(self)
-        self.barGraphWidget.resize(650,300)
+        self.barGraphWidget.resize(1200,300)
         self.barGraphWidget.move(450,450)
         self.barGraph = pg.BarGraphItem(x=self.xval, height=self.y_axis, width=0.5)
         self.barGraphWidget.addItem(self.barGraph)
         #self.data_line5 = self.barGraphWidget.plot(self.xval,self.y_axis)
+        self.barGraphWidget.setBackground(background=None)
 
         ax = self.barGraphWidget.getAxis('bottom')
         ax.setTicks(ticks)
@@ -527,6 +538,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         timer.timeout.connect(self.data)
         timer.start(100) #Veri akış gecikmesi.
         self.data() # Veri tazeleme fonksiyonu.
+
+        self.setWindowTitle("PyQtChart Pie Chart")
+    
+
     def data(self):
         if self.radioButton_4.isChecked():
             user_data.sex = 'M'
@@ -538,7 +553,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             user_data.emotional = 'N'
    #     user_data.frequency = self.horizontalSlider_MovieFreq.value()
         if self.button_counter%2 != 0:
-            self.pushButton.setText("STOP")
+   #         self.pushButton.setText("STOP")
             self.label_15.setText("Recording")
         else:
             self.pushButton.setText("START")
@@ -581,9 +596,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.data_line3.setData(self.x1, self.y3)  # Update the data
         self.data_line4.setData(self.x1, self.y4)  # Update the data
 
-        self.y_axis = [randint(1,10), randint(1,10), randint(1,10), randint(1,10), randint(1,10), randint(1,10)]
+        self.y_axis = [randint(1,10), randint(1,10), randint(1,10), randint(1,10), randint(1,10), randint(1,10), randint(1,10), randint(1,10)]
         self.barGraphWidget.plotItem.clear()
-        self.barGraph = pg.BarGraphItem(x=self.xval, height=self.y_axis, width=0.5)
+        self.barGraph = pg.BarGraphItem(x=self.xval, height=self.y_axis, width=0.5,  brush=(255,31,72))
+
         self.barGraphWidget.addItem(self.barGraph)
         
         #self.data_line5.setData(self.xval,self.y_axis)
@@ -621,6 +637,61 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         data_list = data_str.split(' ')
         self.sensor_val4 = float(data_list[0])"""
         self.sensor_val4 = randint(100,1000)
+
+        
+
+    def reset(self):
+       # self.radioButton_3.setChecked(False)
+      #  self.radioButton_4.setChecked(False)
+      #  self.checkBox.setChecked(False)
+        print("XXXXXXXXXXXXXXXXXxXX")
+
+        self.show()
+        self.create_piechart()
+
+
+
+    def create_piechart(self):
+    
+            self.series = QPieSeries()
+            self.series.append("Anger", 8)
+            self.series.append("Antipathy", 12)
+            self.series.append("Disgust", 25)
+            self.series.append("Fear", 5)
+            self.series.append("Joy", 10)
+            self.series.append("Sad", 5)
+            self.series.append("Surprise", 15)
+            self.series.append("Trust", 10)
+
+    
+            #adding slice - burada max value verilecek, o slice edilecek
+            self.slice = QPieSlice()
+            self.slice = self.series.slices()[2]
+            self.slice.setExploded(True)
+            self.slice.setLabelVisible(True)
+            self.slice.setPen(QPen(Qt.darkGreen, 2))
+            self.slice.setBrush(Qt.darkGreen)
+    
+    
+            self.chart = QChart()
+            self.chart.legend().hide()
+            self.chart.addSeries(self.series)
+            self.chart.createDefaultAxes()
+            self.chart.setAnimationOptions(QChart.SeriesAnimations)
+            self.chart.setTitle("Pie Chart Of The Test Results")
+
+    
+            self.chart.legend().setVisible(True)
+            self.chart.legend().setAlignment(Qt.AlignBottom)
+    
+
+
+            self.chartview = QChartView(self.chart)
+            self.chartview.setRenderHint(QPainter.Antialiasing)
+            self.setCentralWidget(self.chartview)
+
+ 
+
 
 
 if __name__ == "__main__":

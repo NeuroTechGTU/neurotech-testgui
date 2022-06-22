@@ -340,7 +340,7 @@ border-style: outset;
 background-color: rgb(219, 31, 72);</string>
     </property>
     <property name="text">
-     <string>RESET</string>
+     <string>STOP</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_8">
