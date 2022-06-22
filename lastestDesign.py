@@ -470,8 +470,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.pushButton_2.clicked.connect(self.reset) 
 
-
-     
+        self.anger = list()
+        self.antipati = list()
+        self.disgust = list()
+        self.fear = list()
+        self.joy = list()
+        self.sad = list()     
 
 
         self.graphWidget = pg.PlotWidget(self)
@@ -548,7 +552,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     
 
     def data(self):
-        if self.radioButton_4.isChecked():
+       if self.radioButton_4.isChecked():
             user_data.sex = 'M'
         if self.radioButton_3.isChecked():
             user_data.sex = 'F'
@@ -614,11 +618,16 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             str = my_json[2:len(my_json)-2]
             a = list()
             a = str.split(" ")
-
-            self.y_axis = [float(a[0])*100, float(a[1])*100, float(a[2])*100, float(a[3])*100, float(a[4])*100, float(a[5])*100]
+            self.anger.append(float(a[0]))
+            self.antipati.append(float(a[1]))
+            self.disgust.append(float(a[2]))
+            self.fear.append(float(a[3]))
+            self.joy.append(float(a[4]))
+            self.sad.append(float(a[5]))
+            self.y_axis = [float(a[0])*10, float(a[1])*10, float(a[2])*10, float(a[3])*10, float(a[4])*10, float(a[5])*10]
         else :
             self.y_axis = [0,0,0,0,0,0]
-            
+
         self.barGraphWidget.plotItem.clear()
         self.barGraph = pg.BarGraphItem(x=self.xval, height=self.y_axis, width=0.5,  brush=(255,31,72))
 
@@ -670,11 +679,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
 
     def reset(self):
-       # self.radioButton_3.setChecked(False)
-      #  self.radioButton_4.setChecked(False)
-      #  self.checkBox.setChecked(False)
-        print("XXXXXXXXXXXXXXXXXxXX")
-
+        self.radioButton_3.setChecked(False)
+        self.radioButton_4.setChecked(False)
+        self.checkBox.setChecked(False)
         self.show()
         self.create_piechart()
 
@@ -712,43 +719,66 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         return res
 
     def create_piechart(self):
-    
-            self.series = QPieSeries()
-            self.series.append("Anger", 8)
-            self.series.append("Antipathy", 12)
-            self.series.append("Disgust", 25)
-            self.series.append("Fear", 5)
-            self.series.append("Joy", 10)
-            self.series.append("Sad", 5)
-            self.series.append("Surprise", 15)
-            self.series.append("Trust", 10)
 
-    
-            #adding slice - burada max value verilecek, o slice edilecek
-            self.slice = QPieSlice()
-            self.slice = self.series.slices()[2]
-            self.slice.setExploded(True)
-            self.slice.setLabelVisible(True)
-            self.slice.setPen(QPen(Qt.darkGreen, 2))
-            self.slice.setBrush(Qt.darkGreen)
-    
-    
-            self.chart = QChart()
-            self.chart.legend().hide()
-            self.chart.addSeries(self.series)
-            self.chart.createDefaultAxes()
-            self.chart.setAnimationOptions(QChart.SeriesAnimations)
-            self.chart.setTitle("Pie Chart Of The Test Results")
+        mAnger = mean(self.anger)
+        mAntipati = mean(self.antipati)
+        mDisgust = mean(self.disgust)
+        mFear = mean(self.fear)
+        mJoy = mean(self.joy)
+        mSad = mean(self.sad)
 
-    
-            self.chart.legend().setVisible(True)
-            self.chart.legend().setAlignment(Qt.AlignBottom)
-    
+        total = mAnger + mSad + mAntipati + mDisgust + mJoy + mFear
+
+        mAnger = 100*mAnger/total
+        mAntipati = 100*mAntipati/total
+        mDisgust = 100*mDisgust/total
+        mFear = 100*mFear/total
+        mJoy = 100*mJoy/total
+        mSad = 100*mSad/total
+
+        self.series = QPieSeries()
+        self.series.append("Anger", mAnger)
+        self.series.append("Antipathy", mAntipati)
+        self.series.append("Disgust", mDisgust)
+        self.series.append("Fear", mFear)
+        self.series.append("Joy", mJoy)
+        self.series.append("Sad", mSad)
+
+        mylist = list()
+        mylist.append(mAnger)
+        mylist.append(mDisgust)
+        mylist.append(mAntipati)
+        mylist.append(mFear)
+        mylist.append(mJoy)
+        mylist.append(mSad)
+
+        maxval = max(mylist)
+        maxindex = mylist.index(maxval)
+        #adding slice - burada max value verilecek, o slice edilecek
+        self.slice = QPieSlice()
+        self.slice = self.series.slices()[maxindex]
+        self.slice.setExploded(True)
+        self.slice.setLabelVisible(True)
+        self.slice.setPen(QPen(Qt.darkGreen, maxindex))
+        self.slice.setBrush(Qt.darkGreen)
 
 
-            self.chartview = QChartView(self.chart)
-            self.chartview.setRenderHint(QPainter.Antialiasing)
-            self.setCentralWidget(self.chartview)
+        self.chart = QChart()
+        self.chart.legend().hide()
+        self.chart.addSeries(self.series)
+        self.chart.createDefaultAxes()
+        self.chart.setAnimationOptions(QChart.SeriesAnimations)
+        self.chart.setTitle("Pie Chart Of The Test Results")
+
+
+        self.chart.legend().setVisible(True)
+        self.chart.legend().setAlignment(Qt.AlignBottom)
+
+
+
+        self.chartview = QChartView(self.chart)
+        self.chartview.setRenderHint(QPainter.Antialiasing)
+        self.setCentralWidget(self.chartview)
 
  
 
